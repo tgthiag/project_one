@@ -1,21 +1,21 @@
 import React, {useState} from "react";
-import {Text,View,StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import {Text,View, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient'
 import styles from "./style"
 import Toast from 'react-native-toast-message';
-import showToast from "../functions/Toast";
+import showToast from "../../functions/Toast";
 
 // VARÍAVEL DO LOGOTIPO
-const staticImage = require("../../../assets/thegamers.png");
+const staticImage = require("../../../../assets/thegamers.png");
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     const [titulo, setTitulo]= useState("THEGAMERS")
     var [usuario, setUser] = useState("")
     var [senha, setSenha]= useState("")
     
 
     function autentication(){
-        showToast("aguarde um instante...")
+        showToast("Aguarde...")
         // fazer autenticação aqui
     }
 
@@ -31,7 +31,7 @@ export default function LoginScreen() {
         <View style={styles.background}>
             {/* BACKGROUND GRADIENT */}
             <LinearGradient
-                colors={['rgba(0,0,0,0.8)', '#2f4779','#394d97',"#93a2c7"]}
+                colors={['rgba(0,0,0,0.8)',"#02052f", '#2a2a2a',"#6e6e6e","#7d7d7d"]}
                 style={styles.gradient}
             />
             {/* LOGOTIPO */}
@@ -88,10 +88,12 @@ export default function LoginScreen() {
                 </LinearGradient>
             </TouchableOpacity>
             {/* TEXTO DE CADASTRO */}
-            <Text 
-                style={styles.cadastro}>
-                Cadastre-se aqui!
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Reg')}>
+                <Text 
+                    style={styles.cadastro}>
+                    Cadastre-se aqui!
+                </Text>
+            </TouchableOpacity>
             {/* TOAST CALLER */}
             <Toast 
                 position={'bottom'}

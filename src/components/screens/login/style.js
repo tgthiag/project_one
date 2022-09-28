@@ -46,8 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000000",
     fontWeight:"bold",
-    position: 'absolute',
-    bottom: 45,
+    bottom: -20,
     textDecorationLine: 'underline'
   },
   linearGradient: {
