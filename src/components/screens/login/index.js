@@ -1,12 +1,15 @@
 import React, {useState} from "react";
-import {Text,View, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import {Text,View,Image, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient'
 import styles from "./style"
 import Toast from 'react-native-toast-message';
 import showToast from "../../functions/Toast";
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // VARÍAVEL DO LOGOTIPO
 const staticImage = require("../../../../assets/thegamers.png");
+const staticImage2 = require("../../../..//assets/thegamers.png");
 
 export default function LoginScreen({ navigation }) {
     const [titulo, setTitulo]= useState("THEGAMERS")
@@ -28,17 +31,20 @@ export default function LoginScreen({ navigation }) {
     }
 
     return(
-        <View style={styles.background}>
-            {/* BACKGROUND GRADIENT */}
-            <LinearGradient
-                colors={['rgba(0,0,0,0.8)',"#02052f", '#2a2a2a',"#6e6e6e","#7d7d7d"]}
+        <SafeAreaView  style={styles.container}>
+                       {/* BACKGROUND GRADIENT */}
+                       <LinearGradient
+                colors={['rgba(0,0,0,0.7)','rgba(200,104,181,0.1)','rgba(200,104,181,0.2)',"#1b1d25", '#1b1d25',"#1b1d25","#1b1d25"]}
                 style={styles.gradient}
             />
+        <StatusBar/>
+         <SafeAreaView style={styles.topContainer}>
+             <Image source={staticImage2} style={styles.imageLogo2}/>
+         </SafeAreaView>
+         <SafeAreaView style={{ width: "100%", height: "100%", alignItems:"center", margin: "30%"}}>
+ 
             {/* LOGOTIPO */}
-            <ImageBackground 
-                source={staticImage} 
-                style={styles.imageLogo}
-            />
+
             {/* TÍTULO */}
             <Text 
                 style={styles.Title}>
@@ -48,6 +54,7 @@ export default function LoginScreen({ navigation }) {
             <TextInput 
                 style={styles.input} 
                 placeholder={"Usuário"} 
+                placeholderTextColor="#cdcdcd" 
                 value={usuario}
                 onChangeText={setUser}
             />
@@ -56,6 +63,7 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input} 
                 keyboardType={"password"}
                 placeholder={"Senha"} 
+                placeholderTextColor="#cdcdcd" 
                 value={senha}
                 secureTextEntry={true}
                 onChangeText={setSenha}
@@ -66,7 +74,7 @@ export default function LoginScreen({ navigation }) {
                 onPress={notBlank}
             >
                 <LinearGradient 
-                    colors={['#a85400', '#b73c00','#d26900', '#a6a600']} 
+                    colors={['#fbe1fa','rgba(200,104,181,0.5)', 'rgba(200,104,181,0.4)','rgba(200,104,181,0.9)' ]} 
                     style={styles.linearGradient} 
                 > 
                     <Text 
@@ -78,7 +86,7 @@ export default function LoginScreen({ navigation }) {
             {/* LOGIN COM FACEBOOK */}
             <TouchableOpacity style={styles.linearGradient} >
                 <LinearGradient 
-                    colors={['#192f6a','#3b5998','#4c669f' ]} 
+                    colors={['#192f6a','#0080ff','#0080ff','#0080ff' ]} 
                     style={styles.linearGradient} 
                 >
                     <Text 
@@ -99,7 +107,8 @@ export default function LoginScreen({ navigation }) {
                 position={'bottom'}
                 bottomOffset={90}
             />
-        </View>    
+         </SafeAreaView>
+        </SafeAreaView>
     )
 }
 
