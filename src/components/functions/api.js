@@ -13,8 +13,7 @@ export default async function getApi(pesquisa,offsetNumber,rating){
         data: `fields id,name,summary,follows,platforms,cover.*,screenshots.*;
             search "${pesquisa || 'metal'}*"; offset ${offsetNumber || 0}; where screenshots != null & cover != null & rating > ${rating || "0"};limit 30;`
         })
-        const result = response.data
-        console.log(result)
+        const result = await response.data
         return(response.data)
     } catch (error) {
         alert(error)
