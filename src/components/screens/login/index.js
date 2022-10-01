@@ -31,58 +31,58 @@ export default function LoginScreen({ navigation }) {
     }
 
     return(
-        <SafeAreaView  style={styles.container}>
-                       {/* BACKGROUND GRADIENT */}
-                       <LinearGradient
+        <SafeAreaView  
+            style={styles.container}>
+            {/* BACKGROUND GRADIENT */}
+            <LinearGradient
                 colors={['rgba(0,0,0,0.7)','rgba(200,104,181,0.1)','rgba(200,104,181,0.2)',"#1b1d25", '#1b1d25',"#1b1d25","#1b1d25"]}
                 style={styles.gradient}
             />
-        <StatusBar/>
-         <SafeAreaView style={styles.topContainer}>
-             <Image source={staticImage2} style={styles.imageLogo2}/>
-         </SafeAreaView>
-         <SafeAreaView style={{ width: "100%", height: "100%", alignItems:"center", margin: "30%"}}>
- 
-            {/* LOGOTIPO */}
-
-            {/* TÍTULO */}
-            <Text 
-                style={styles.Title}>
-                {titulo}
-            </Text>
-            {/* INPUT DE USUÁRIO */}
-            <TextInput 
-                style={styles.input} 
-                placeholder={"Usuário"} 
-                placeholderTextColor="#cdcdcd" 
-                value={usuario}
-                onChangeText={setUser}
-            />
-            {/* INPUT SENHA */}
-            <TextInput 
-                style={styles.input} 
-                keyboardType={"password"}
-                placeholder={"Senha"} 
-                placeholderTextColor="#cdcdcd" 
-                value={senha}
-                secureTextEntry={true}
-                onChangeText={setSenha}
-            />
-            {/* BOTÃO DE LOGIN */}
-            <TouchableOpacity 
-                style={styles.linearGradient} 
-                onPress={notBlank}
-            >
-                <LinearGradient 
-                    colors={['#fbe1fa','rgba(200,104,181,0.5)', 'rgba(200,104,181,0.4)','rgba(200,104,181,0.9)' ]} 
+            <StatusBar/>
+            <SafeAreaView style={styles.topContainer}>
+                <Image source={staticImage2} style={styles.imageLogo2}/>
+            </SafeAreaView>
+            
+            <SafeAreaView style={{ width: "100%", height: "100%", alignItems:"center", margin: "30%"}}>
+                {/* TÍTULO */}
+                <Text 
+                    style={styles.Title}>
+                    {titulo}
+                </Text>
+                {/* INPUT DE USUÁRIO */}
+                <TextInput 
+                    style={styles.input} 
+                    placeholder={"Usuário"} 
+                    placeholderTextColor="#cdcdcd" 
+                    value={usuario}
+                    onChangeText={setUser}
+                />
+                {/* INPUT SENHA */}
+                <TextInput 
+                    style={styles.input} 
+                    keyboardType={"password"}
+                    placeholder={"Senha"} 
+                    placeholderTextColor="#cdcdcd" 
+                    value={senha}
+                    secureTextEntry={true}
+                    onChangeText={setSenha}
+                />
+                {/* BOTÃO DE LOGIN */}
+                <TouchableOpacity 
                     style={styles.linearGradient} 
-                > 
-                    <Text 
-                        style={styles.bt_text}>
-                        Fazer login
-                    </Text>
+                    onPress={notBlank}
+                >
+                    <LinearGradient 
+                        colors={['#fbe1fa','rgba(200,104,181,0.5)', 'rgba(200,104,181,0.4)','rgba(200,104,181,0.9)' ]} 
+                        style={styles.linearGradient} 
+                    > 
+                        <Text 
+                            style={styles.bt_text}>
+                            Fazer login
+                        </Text>
                 </LinearGradient>
             </TouchableOpacity>
+
             {/* LOGIN COM FACEBOOK */}
             <TouchableOpacity style={styles.linearGradient} >
                 <LinearGradient 
@@ -95,6 +95,7 @@ export default function LoginScreen({ navigation }) {
                     </Text>
                 </LinearGradient>
             </TouchableOpacity>
+
             {/* TEXTO DE CADASTRO */}
             <TouchableOpacity onPress={() => navigation.navigate('Reg')}>
                 <Text 
