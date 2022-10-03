@@ -165,15 +165,17 @@ export default function consoless(codigo) {
         consoles.forEach((consl)=>{
             // console.log(el[0])
             if (consl[0] == platf){
-                consolesList = consolesList + consl[1] + " "
+                // consolesList = consolesList + consl[1] + " "
+                consolesList.push(consl[1])
             }
         })
     })
-    return(consolesList)
-
-    // return(
-    // consoles.forEach((el)=>{
-    //     console.log(el[0])
-    // })
-    // )
+    function setID(item, index) {
+        var fullname = {"index": item};
+        return fullname;
+    }
+    const output = consolesList.map(setID)
+    if(output.length > 0){
+        return(output)
+    }
 }

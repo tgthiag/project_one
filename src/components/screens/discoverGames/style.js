@@ -4,6 +4,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex:1,
+        height: "100%",
         backgroundColor: '#1b1d25',
         alignItems:"center",
     },
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
         resizeMode:"stretch",
         width: "30%",
         height: "47%",
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop: "5%"
       },
     backgroundLogo: {
         resizeMode: "cover",
@@ -126,9 +128,7 @@ const styles = StyleSheet.create({
     closeSearch:{
         width: "50%",
         borderRadius:30,  
-        borderWidth: 1, 
-        backgroundColor : "#000000",   
-        color: "#FFFFFF" 
+        borderWidth: 1
     }
 
 })

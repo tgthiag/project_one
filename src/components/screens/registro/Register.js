@@ -7,7 +7,7 @@ export default function RegisterScreen({ navigation }){
     return(
         <View style={styles.container}>
             <LinearGradient
-                colors={['rgba(0,0,0,0.8)',"#6f3700","#e37200", '#987867','#676767',"#3c332d"]}
+                colors={['rgba(0,0,0,0.7)','rgba(255,128,0,0.1)','rgba(255,128,0,0.2)',"#1b1d25", '#1b1d25',"#1b1d25","#1b1d25"]}
                 style={styles.gradient}
             />
             <Text style={styles.Title}>CADASTRO</Text>

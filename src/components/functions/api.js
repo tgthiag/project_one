@@ -1,7 +1,15 @@
 import axios from 'axios';
 import {BASE_URL, IGDB_KEY, IGDB_USER} from '@env';
 
-export default async function getApi(pesquisa,offsetNumber,rating){
+export default async function getApi(pesquisa,offsetNumber, start){
+    var parametersSearch = ((start === true) ? 
+    `fields id,name,summary,follows,platforms,cover.*,screenshots.*; offset ${offsetNumber || 0}; 
+        where screenshots != null & cover != null & follows > 350;limit 40;` 
+    : 
+    `fields id,name,summary,follows,platforms,cover.*,screenshots.*;
+            search "${pesquisa || 'metal'}*"; offset ${offsetNumber || 0}; 
+            where screenshots != null & cover != null & follows > 1;limit 20;`);
+            console.log(start)
     try {
         let response = await axios({
         url: `${BASE_URL}`,
@@ -11,10 +19,11 @@ export default async function getApi(pesquisa,offsetNumber,rating){
             'Client-ID' : `${IGDB_USER}`,
             'Authorization' : `${IGDB_KEY}`,
         },
-        data: `fields id,name,summary,follows,platforms,cover.*,screenshots.*;
-            search "${pesquisa || 'metal'}*"; offset ${offsetNumber || 0}; where screenshots != null & cover != null & rating > ${rating || "0"};limit 30;`
+
+        data: parametersSearch
         })
         const result = await response.data
+        console.log(result)
         return(response.data)
     } catch (error) {
         alert(error)

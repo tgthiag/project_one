@@ -1,33 +1,51 @@
 import React, {useState} from "react";
-import {Text,View,Image, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
+import {Text,View,Image, TextInput, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient'
 import styles from "./style"
 import Toast from 'react-native-toast-message';
 import showToast from "../../functions/Toast";
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import auth from "../../../config/auth/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 // VARÍAVEL DO LOGOTIPO
 const staticImage = require("../../../../assets/thegamers.png");
 const staticImage2 = require("../../../..//assets/thegamers.png");
+
 
 export default function LoginScreen({ navigation }) {
     const [titulo, setTitulo]= useState("THEGAMERS")
     var [usuario, setUser] = useState("")
     var [senha, setSenha]= useState("")
     
-
-    function autentication(){
-        showToast("Aguarde...")
-        // fazer autenticação aqui
+    const autentication = auth
+    function signIn(auth, email, password){
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("logado "+ user)
+          showToast("Bem vindo!")
+            setTimeout(() => {
+                
+            }, 3000);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("COD: "+ errorCode +" error message: "+ "errorMessage")
+          showToast(errorCode)
+          
+        });
     }
-
+    
     // VERIFICA SE OS CAMPOS DE INPUT ESTÃO PREENCHIDOS
     function notBlank(){
         if(!(usuario.notBlank || usuario) || !(senha.notBlank || senha)){
             return showToast("Preencha os campos")
-        }
-        autentication()
+        }else{
+        signIn(autentication,usuario,senha)
+    }
     }
 
     return(
@@ -104,11 +122,12 @@ export default function LoginScreen({ navigation }) {
                 </Text>
             </TouchableOpacity>
             {/* TOAST CALLER */}
-            <Toast 
+ 
+         </SafeAreaView>
+         <Toast 
                 position={'bottom'}
                 bottomOffset={90}
             />
-         </SafeAreaView>
         </SafeAreaView>
     )
 }

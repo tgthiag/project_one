@@ -5,14 +5,19 @@ import RegisterScreen from "./src/components/screens/registro/Register";
 import DiscoverGames from "./src/components/screens/discoverGames/discoverG";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MyParentComponent from "./src/components/screens/discoverGames/test";
-
+import MyParentComponent from "./src/components/screens/discoverGames";
+import {User} from 'firebase/auth';
+    
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth();
 const Stack = createNativeStackNavigator();
+const user = User
+const loginCheck = !user > 0 ? "teste" : "Login"
 
 export default function App(){
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="teste">
+      <Stack.Navigator initialRouteName={loginCheck}>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
         <Stack.Screen name="Reg" component={RegisterScreen} options={{headerShown: false}}/>
         {/* <Stack.Screen name="DiscoverG" component={DiscoverGames} options={{headerShown: false}}/> */}
