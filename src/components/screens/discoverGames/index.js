@@ -10,9 +10,12 @@ import Modal from "react-native-modal";
 import consoless from "../../functions/platforms";
 import styles from "./style";
 
+//Images
 const staticImage = require("../../../..//assets/thegamers.png");
 const shadowImg = require("../../../..//assets/shadowBackground.png");
 const searchIcon = require("../../../..//assets/search.png");
+
+var about = ""
 
 export default class MyParentComponent extends Component {
   constructor(props) {
@@ -61,12 +64,11 @@ export default class MyParentComponent extends Component {
         gameCover : cover,
         gameFollows : followers,
         gameBackground : imgs[0].url})
+        about = "About"
         }catch (error){ 
             alert(error) 
         }
     }
-    
-
 
 //HIDE AND SHOW MODAL
 handleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible})
@@ -84,23 +86,24 @@ renderItem = data => (
       </View>
   </View>
   );
+  //GENERATE RANDOM COLORS FOR PLATFORMS CONTAINERS
   generateColor(){
     const randomColor = Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, '0');
     return `#${randomColor}`;
   };
+
   //LIFECYCLE START
   componentDidMount() {
     getApi("",Math.floor(Math.random() * 40), true).then(v => {
       this.setState({ dados: v },() => {
         this.populate()
       });
-
   });
   }
-  render() {
 
+  render() {
     return (
       // LOGO AND SEARCH BAR
         <SafeAreaView  style={styles.container}>
@@ -157,15 +160,9 @@ renderItem = data => (
 
               {/* TEXT ABOUT AREA */}
               <ScrollView style={styles.scrollView}>
-                  <Text style={styles.subTitle}>About:</Text>
+                  <Text style={styles.subTitle}>{about}</Text>
                   <Text style={styles.textoSimples}>{this.state.gameAbout || ""}</Text>
               </ScrollView>
-
-              {/* Toast caller */}
-              <Toast 
-                  position={'bottom'}
-                  bottomOffset={90}
-              />
       </SafeAreaView>
   )
   }

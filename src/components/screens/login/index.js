@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Text,View,Image, TextInput, TouchableOpacity} from 'react-native';
+import {Text,Button,Image, TextInput, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient'
 import styles from "./style"
 import Toast from 'react-native-toast-message';
@@ -8,38 +8,39 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import auth from "../../../config/auth/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// VARÍAVEL DO LOGOTIPO
-const staticImage = require("../../../../assets/thegamers.png");
+// IMAGE
 const staticImage2 = require("../../../..//assets/thegamers.png");
 
 
 export default function LoginScreen({ navigation }) {
     const [titulo, setTitulo]= useState("THEGAMERS")
-    var [usuario, setUser] = useState("")
-    var [senha, setSenha]= useState("")
+    const [usuario, setUser] = useState("")
+    const [senha, setSenha]= useState("")
     
+    //SIGN IN FUNCTION
     const autentication = auth
     function signIn(auth, email, password){
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("logado "+ user)
           showToast("Bem vindo!")
             setTimeout(() => {
-                
-            }, 3000);
+                navigation.navigate('discoverGames')
+            }, 2000);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log("COD: "+ errorCode +" error message: "+ "errorMessage")
-          showToast(errorCode)
+          var toastError = (errorCode === "auth/invalid-email") ? "Usuário ou senha inválidos" : errorCode
+          showToast(toastError)
           
         });
     }
     
-    // VERIFICA SE OS CAMPOS DE INPUT ESTÃO PREENCHIDOS
+    // CHECK IF INPUTS ARE BLANK, IF NOT, START SIGN IN FUNCTION
     function notBlank(){
         if(!(usuario.notBlank || usuario) || !(senha.notBlank || senha)){
             return showToast("Preencha os campos")
@@ -70,7 +71,7 @@ export default function LoginScreen({ navigation }) {
                 {/* INPUT DE USUÁRIO */}
                 <TextInput 
                     style={styles.input} 
-                    placeholder={"Usuário"} 
+                    placeholder={"Email"} 
                     placeholderTextColor="#cdcdcd" 
                     value={usuario}
                     onChangeText={setUser}
@@ -88,46 +89,37 @@ export default function LoginScreen({ navigation }) {
                 {/* BOTÃO DE LOGIN */}
                 <TouchableOpacity 
                     style={styles.linearGradient} 
-                    onPress={notBlank}
-                >
+                    onPress={notBlank}>
                     <LinearGradient 
                         colors={['#fbe1fa','rgba(200,104,181,0.5)', 'rgba(200,104,181,0.4)','rgba(200,104,181,0.9)' ]} 
-                        style={styles.linearGradient} 
-                    > 
+                        style={styles.linearGradient}> 
                         <Text 
                             style={styles.bt_text}>
                             Fazer login
                         </Text>
-                </LinearGradient>
-            </TouchableOpacity>
+                    </LinearGradient>
+                </TouchableOpacity>
 
-            {/* LOGIN COM FACEBOOK */}
-            <TouchableOpacity style={styles.linearGradient} >
-                <LinearGradient 
-                    colors={['#192f6a','#0080ff','#0080ff','#0080ff' ]} 
-                    style={styles.linearGradient} 
-                >
+                {/* LOGIN COM FACEBOOK */}
+                <TouchableOpacity style={styles.linearGradient} >
+                    <LinearGradient 
+                        colors={['#192f6a','#0080ff','#0080ff','#0080ff' ]} 
+                        style={styles.linearGradient}>
+                        <Text 
+                            style={styles.bt_text}>
+                            Entrar com Facebook
+                        </Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+
+                {/* TEXTO DE CADASTRO */}
+                <TouchableOpacity onPress={() => navigation.navigate('Reg')}>
                     <Text 
-                        style={styles.bt_text}>
-                        Entrar com Facebook
+                        style={styles.cadastro}>
+                        Cadastre-se aqui!
                     </Text>
-                </LinearGradient>
-            </TouchableOpacity>
-
-            {/* TEXTO DE CADASTRO */}
-            <TouchableOpacity onPress={() => navigation.navigate('Reg')}>
-                <Text 
-                    style={styles.cadastro}>
-                    Cadastre-se aqui!
-                </Text>
-            </TouchableOpacity>
-            {/* TOAST CALLER */}
- 
-         </SafeAreaView>
-         <Toast 
-                position={'bottom'}
-                bottomOffset={90}
-            />
+                </TouchableOpacity>
+            </SafeAreaView>
         </SafeAreaView>
     )
 }

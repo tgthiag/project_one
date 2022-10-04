@@ -1,92 +1,97 @@
-import React from 'react';
-import {View, StyleSheet,Text, Button, TextInput, TouchableOpacity} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient'
+import React, {useState} from 'react';
+import {View,Text,Image, TextInput, TouchableOpacity} from 'react-native';
+import {LinearGradient} from 'expo-linear-gradient';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import styles from "./style"
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import showToast from "../../functions/Toast";
+import auth from "../../../config/auth/auth";
 
-
+const staticImage2 = require("../../../../assets/thegamers.png");
+//IN DEVELOPMENT
 export default function RegisterScreen({ navigation }){
+  const [usuario, setUsuario] = useState("")
+  const [password, setPassword] = useState("")
+  const [verifySenha, setVerifySenha] = useState("")
+  const authentication = auth;
+
+  function validate(){
+    if(usuario === "" || password === "" || verifySenha === ""){
+      showToast("preencha os campos")
+    }else{
+      console.log("td preenchido")
+      if(password === verifySenha){
+        signUp(authentication,usuario,password)
+      }
+    }
+  }
+  function signUp(auth,email,senha){
+    createUserWithEmailAndPassword(auth, email, senha)
+  .then((userCredential) => {
+    showToast("Sucesso!")
+    const user = userCredential.user;
+    setTimeout(() => {
+      navigation.navigate('Login')
+  }, 1500);
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    showToast(errorCode)
+  });
+  }
+
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <LinearGradient
                 colors={['rgba(0,0,0,0.7)','rgba(255,128,0,0.1)','rgba(255,128,0,0.2)',"#1b1d25", '#1b1d25',"#1b1d25","#1b1d25"]}
+                backgroundColor={"#FFFFFF"}
                 style={styles.gradient}
             />
-            <Text style={styles.Title}>CADASTRO</Text>
-            <Text style={styles.subtitle}>Nome de usuário:</Text>
-            <TextInput style={styles.input} ></TextInput>
-            <Text style={styles.subtitle}>Email:</Text>
-            <TextInput style={styles.input} ></TextInput>
-            <Text style={styles.subtitle}>Senha:</Text>
-            <TextInput style={styles.input}  secureTextEntry={true}></TextInput>
-            <Text style={styles.subtitle}>Repita a senha:</Text>
-            <TextInput style={styles.input}  secureTextEntry={true}></TextInput>
-            <TouchableOpacity 
-                style={styles.linearGradient} 
-                onPress={() => navigation.navigate('Login')}
-            >
-                <LinearGradient 
-                    colors={['#a85400', '#b73c00','#d26900', '#a6a600']} 
-                    style={styles.linearGradient} 
-                > 
-                    <Text 
-                        style={styles.bt_text}>
-                        Cadastrar
-                    </Text>
-                </LinearGradient>
-            </TouchableOpacity>
-        </View>
+            <StatusBar/>
+            <SafeAreaView style={styles.topContainer}>
+                <Image source={staticImage2} style={styles.imageLogo2}/>
+            </SafeAreaView>
+            <SafeAreaView style={{flex:1, alignItems:"center", justifyContent:"center", width: "100%", height:"100%"}}>
+              <Text style={styles.Title}>CADASTRO</Text>
+              <Text style={styles.subtitle}>Nome de usuário:</Text>
+              <TextInput style={styles.input} ></TextInput>
+              <Text style={styles.subtitle}>Email:</Text>
+              <TextInput style={styles.input} 
+                placeholderTextColor="#cdcdcd" 
+                value={usuario}
+                onChangeText={setUsuario}></TextInput>
+              <Text style={styles.subtitle}>Senha:</Text>
+              <TextInput style={styles.input}
+                keyboardType={"password"}
+                placeholderTextColor="#cdcdcd" 
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}/>
+              <Text style={styles.subtitle}>Repita a senha:</Text>
+              <TextInput style={styles.input}  
+                keyboardType={"password"}
+                placeholderTextColor="#cdcdcd" 
+                value={verifySenha}
+                onChangeText={setVerifySenha}
+                secureTextEntry={true}/>
+              <TouchableOpacity 
+                  style={styles.linearGradient} 
+                  onPress={() => validate()}
+              >
+                  <LinearGradient 
+                      colors={['#ffb66c','rgba(255,128,0,0.4)', 'rgba(255,128,0,0.4)','rgba(255,128,0,0.6)','#a85400']} 
+                      style={styles.linearGradient} 
+                  > 
+                      <Text 
+                          style={styles.bt_text}>
+                          Cadastrar
+                      </Text>
+                  </LinearGradient>
+              </TouchableOpacity>
+            </SafeAreaView>
+        </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    gradient:{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: "100%",
-      },
-    input:{
-      width:"70%",
-      borderRadius: 50,
-      backgroundColor:"#a8a8a8",
-      height: 40,
-      margin: 12,
-      fontSize: 18,
-      paddingLeft: 10,
-      textAlign: "center"
-  },
-  Title: {
-    fontSize: 48,
-    color: "#FFFFFF",
-    marginBottom: 50,
-    fontWeight:"bold"
-  },
-  bt_text: {
-    fontSize: 18,
-    color: "#FFFFFF",
-    fontWeight:"bold"
-  },
-  subtitle:{
-    fontSize: 20,
-    fontWeight:"bold",
-    color: "#FFFFFF",
-  },
-  linearGradient: {
-    borderRadius: 50,
-    padding: 15,
-    alignItems: 'center',
-    alignItems: "center",
-    justifyContent: "center",
-    width:"82%",
-    marginTop:10,
-    paddingTop: 14,
-    paddingBottom: 14,
-
-  },
-  
-})
