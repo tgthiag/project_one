@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
     
 const Stack = createNativeStackNavigator();
 const user = User
-const loginCheck = !user > 0 ? "teste" : "Login"
+const loginCheck = !user > 0 ? "discoverGames" : "Login"
 
 export default function App(){
   return (

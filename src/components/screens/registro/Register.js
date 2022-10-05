@@ -21,9 +21,10 @@ export default function RegisterScreen({ navigation }){
     if(usuario === "" || password === "" || verifySenha === ""){
       showToast("preencha os campos")
     }else{
-      console.log("td preenchido")
       if(password === verifySenha){
         signUp(authentication,usuario,password)
+      }else{
+        showToast("As senhas não coincidem.")
       }
     }
   }
